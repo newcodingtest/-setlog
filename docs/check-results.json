@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-14",
+  "checks": [
+    {
+      "name": "typecheck",
+      "code": 0,
+      "output": "\n> setlog@1.0.0 typecheck\n> tsc --noEmit\n\n"
+    },
+    {
+      "name": "lint",
+      "code": 0,
+      "output": "\n> setlog@1.0.0 lint\n> eslint .\n\n"
+    },
+    {
+      "name": "test",
+      "code": 0,
+      "output": "\n> setlog@1.0.0 test\n> vitest run\n\n\n RUN  v5.0.4 D:/backup/vsCodeworkspace/side/setlog\n\n ✓ tests/repository.test.ts (19 tests) 237ms\n ✓ tests/SetRow.test.tsx (3 tests) 356ms\n\n Test Files  2 passed (2)\n      Tests  22 passed (22)\n   Start at  16:36:40\n   Duration  3.39s (environment 66%, setup 14%, tests 10%, import 7%, transform 3%)\n\n"
+    },
+    {
+      "name": "build",
+      "code": 0,
+      "output": "\n> setlog@1.0.0 build\n> tsc --noEmit && vite build\n\nvite v8.3.4 building client environment for production...\ntransforming...\n✓ 2526 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/manifest.webmanifest                          0.46 kB\ndist/index.html                                    0.74 kB │ gzip:   0.47 kB\ndist/assets/index-DccNRes9.css                    24.80 kB │ gzip:   6.75 kB\ndist/assets/workbox-window.prod.es5-Bd17z0YL.js    5.65 kB │ gzip:   2.20 kB\ndist/assets/StatisticsPage-CsLmYVe4.js           378.01 kB │ gzip: 108.51 kB\ndist/assets/index-DiDsYvKt.js                    412.29 kB │ gzip: 130.33 kB\n\n✓ built in 1.41s\n\nPWA v2.0.0\nmode      generateSW\nprecache  12 entries (811.29 KiB)\nfiles generated\n  dist/sw.js\n  dist/workbox-2fbc6a65.js\n"
+    },
+    {
+      "name": "test:e2e",
+      "code": 0,
+      "output": "\nRunning 3 tests using 1 worker\n\n  ok 1 e2e\\backup.spec.ts:2:1 › 사용자 운동 생성·수정·삭제, 백업 확인과 복구, 기록 삭제 (3.0s)\n  ok 2 e2e\\backup.spec.ts:91:1 › 데스크톱과 작은 모바일의 레이아웃·기본 접근성 (983ms)\n  ok 3 e2e\\workout.spec.ts:2:1 › 모바일 운동 기록, 재실행 복구, 이전 기록, 통계, 오프라인 PWA (2.3s)\n\n  3 passed (8.1s)\n"
+    }
+  ]
+}
