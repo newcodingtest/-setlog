@@ -136,7 +136,7 @@ describe("실제 IndexedDB 저장소", () => {
     const { id } = await bench();
     await expect(repo.complete(id)).rejects.toThrow("최소 한 세트");
   });
-  it("백업 내보내기와 교체 복구를 수행한다", async () => {
+  it("백업 내보내기와 병합 복구를 수행한다", async () => {
     const { id, set } = await bench();
     await repo.updateSet(set.id, { weight: 70.5, reps: 8, completed: true });
     const backup = await exportBackup(db);
@@ -196,7 +196,7 @@ describe("날짜와 입력 검증", () => {
 it("복구 도중 오류가 발생해도 기존 데이터를 트랜잭션으로 되돌린다", async () => {
   const { id } = await bench();
   const backup = await exportBackup(db);
-  const spy = vi.spyOn(db.sets, "bulkAdd").mockImplementation(() => {
+  const spy = vi.spyOn(db.sets, "bulkPut").mockImplementation(() => {
     throw new Error("쓰기 실패");
   });
   await expect(importBackup(backup, db)).rejects.toThrow("쓰기 실패");

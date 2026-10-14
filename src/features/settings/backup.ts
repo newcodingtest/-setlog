@@ -1,3 +1,4 @@
+import { backupFingerprint, planMerge } from "./merge";
 import { db, type SetLogDB } from "../../db/database";
 import {
   muscleGroups,
@@ -187,14 +188,47 @@ export async function exportBackup(database: SetLogDB = db): Promise<Backup> {
     sets: await database.sets.toArray(),
   }));
 }
-export async function importBackup(value: unknown, database: SetLogDB = db) {
-  const backup = parseBackup(value);
-  await database.transaction("rw", database.tables, async () => {
-    await Promise.all(database.tables.map((t) => t.clear()));
-    await database.exercises.bulkAdd(backup.exercises);
-    await database.sessions.bulkAdd(backup.sessions);
-    await database.workoutExercises.bulkAdd(backup.workoutExercises);
-    await database.sets.bulkAdd(backup.sets);
+export async function previewImport(value: unknown, database: SetLogDB = db) {
+  const incoming = parseBackup(value);
+  return database.transaction("r", database.tables, async () => {
+    const local = parseBackup(await exportBackup(database));
+    const plan = planMerge(local, incoming);
+    parseBackup(plan.backup);
+    return { summary: plan.summary, fingerprint: backupFingerprint(local) };
+  });
+}
+export async function importBackup(
+  value: unknown,
+  database: SetLogDB = db,
+  expectedFingerprint?: string,
+) {
+  const incoming = parseBackup(value);
+  return database.transaction("rw", database.tables, async () => {
+    const local = parseBackup(await exportBackup(database));
+    if (
+      expectedFingerprint !== undefined &&
+      backupFingerprint(local) !== expectedFingerprint
+    )
+      throw new Error(
+        "미리보기 이후 기록이 변경되었습니다. 파일을 다시 선택해 병합 내용을 확인해주세요.",
+      );
+    const plan = planMerge(local, incoming);
+    const merged = parseBackup(plan.backup);
+    const entryIds = new Set(merged.workoutExercises.map((e) => e.id)),
+      setIds = new Set(merged.sets.map((s) => s.id));
+    await database.sets.bulkDelete(
+      local.sets.filter((s) => !setIds.has(s.id)).map((s) => s.id),
+    );
+    await database.workoutExercises.bulkDelete(
+      local.workoutExercises
+        .filter((e) => !entryIds.has(e.id))
+        .map((e) => e.id),
+    );
+    await database.exercises.bulkPut(merged.exercises);
+    await database.sessions.bulkPut(merged.sessions);
+    await database.workoutExercises.bulkPut(merged.workoutExercises);
+    await database.sets.bulkPut(merged.sets);
+    return plan.summary;
   });
 }
 export async function resetData(database: SetLogDB = db) {

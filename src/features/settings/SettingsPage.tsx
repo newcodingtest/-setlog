@@ -1,7 +1,13 @@
 import { useState, useRef } from "react";
 import { Download, Upload, ShieldCheck, Trash2 } from "lucide-react";
 import { useData, workoutRepository } from "../../hooks/useData";
-import { exportBackup, parseBackup, importBackup, resetData } from "./backup";
+import {
+  exportBackup,
+  parseBackup,
+  importBackup,
+  previewImport,
+  resetData,
+} from "./backup";
 import { Modal } from "../../components/common/Modal";
 import { localDate } from "../../lib/date";
 import type { Backup } from "../../types/domain";
@@ -9,6 +15,8 @@ export function SettingsPage() {
   const { run, pending, invalid } = useData();
   const input = useRef<HTMLInputElement>(null);
   const [backup, setBackup] = useState<Backup>(),
+    [preview, setPreview] =
+      useState<Awaited<ReturnType<typeof previewImport>>>(),
     [reset, setReset] = useState(false),
     [message, setMessage] = useState(""),
     [error, setError] = useState("");
@@ -65,7 +73,9 @@ export function SettingsPage() {
         <div className="settings-row">
           <div>
             <h3>백업 파일 가져오기</h3>
-            <p>형식·버전·중복 ID·데이터 연결을 확인한 후 교체합니다.</p>
+            <p>
+              기존 기록을 유지하고 백업의 새 기록과 최신 수정 내용을 병합합니다.
+            </p>
           </div>
           <button
             className="secondary"
@@ -86,10 +96,15 @@ export function SettingsPage() {
               e.target.value = "";
               if (!file) return;
               setError("");
+              setPreview(undefined);
+              setBackup(undefined);
               try {
                 if (file.size > 20 * 1024 * 1024)
                   throw new Error("20MB 이하의 백업 파일을 선택해주세요.");
-                setBackup(parseBackup(JSON.parse(await file.text())));
+                const parsed = parseBackup(JSON.parse(await file.text()));
+                const plan = await previewImport(parsed);
+                setPreview(plan);
+                setBackup(parsed);
               } catch (e) {
                 setError(
                   e instanceof Error ? e.message : "파일을 읽을 수 없습니다.",
@@ -145,39 +160,46 @@ export function SettingsPage() {
         <p>모든 세트가 성장의 기록이 된다.</p>
         <small>v1.0.0 · 개인 운동일지 · 서버 및 회원가입 없음</small>
       </footer>
-      {backup && (
+      {backup && preview && (
         <Modal
-          title="기존 데이터를 교체할까요?"
+          title="백업 기록을 병합할까요?"
           onClose={() => setBackup(undefined)}
         >
           <p className="error">
-            현재 기록을 모두 삭제하고 선택한 백업으로 교체합니다. 먼저 현재
-            데이터를 내보내는 것을 권장합니다.
+            백업에 없는 기존 기록은 유지됩니다. 같은 기록은 더 최근에 수정된
+            운동 전체를 적용하며, 수정 시간이 같으면 현재 기기의 기록을
+            유지합니다. 기기 시간이 정확한지 확인해주세요.
           </p>
           <p>
-            운동 종목 {backup.exercises.length}개 · 세션{" "}
-            {backup.sessions.length}개 · 세트 {backup.sets.length}개
+            새 운동 {preview.summary.added}개 · 최신 기록으로 갱신{" "}
+            {preview.summary.updated}개 · 동일 기록 {preview.summary.unchanged}
+            개 · 현재 기록 유지 {preview.summary.keptLocal}개
+          </p>
+          <p>
+            새 종목 {preview.summary.exercisesAdded}개 · 종목 갱신{" "}
+            {preview.summary.exercisesUpdated}개 · 같은 수정 시간의 충돌{" "}
+            {preview.summary.conflicts}개
           </p>
           <div className="modal-actions">
             <button className="secondary" onClick={() => setBackup(undefined)}>
               취소
             </button>
             <button
-              className="danger"
+              className="primary"
               disabled={!!pending}
               onClick={async () => {
                 if (
                   await run(async () => {
-                    await importBackup(backup);
+                    await importBackup(backup, undefined, preview.fingerprint);
                     await workoutRepository.initialize();
                   })
                 ) {
                   setBackup(undefined);
-                  setMessage("백업 복구가 완료되었습니다.");
+                  setMessage("백업 병합이 완료되었습니다.");
                 }
               }}
             >
-              데이터 교체
+              기록 병합
             </button>
           </div>
         </Modal>

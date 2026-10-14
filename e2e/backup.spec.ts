@@ -66,15 +66,15 @@ test("사용자 운동 생성·수정·삭제, 백업 확인과 복구, 기록 �
   );
   await page.locator("input[type=file]").setInputFiles(backupPath!);
   await expect(
-    page.getByRole("dialog", { name: "기존 데이터를 교체할까요?" }),
+    page.getByRole("dialog", { name: "백업 기록을 병합할까요?" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "취소", exact: true }).click();
   await page.getByRole("button", { name: "초기화", exact: true }).click();
   await page.getByRole("button", { name: "영구 삭제" }).click();
   await expect(page.getByText("데이터를 초기화했습니다.")).toBeVisible();
   await page.locator("input[type=file]").setInputFiles(backupPath!);
-  await page.getByRole("button", { name: "데이터 교체", exact: true }).click();
-  await expect(page.getByText("백업 복구가 완료되었습니다.")).toBeVisible();
+  await page.getByRole("button", { name: "기록 병합", exact: true }).click();
+  await expect(page.getByText("백업 병합이 완료되었습니다.")).toBeVisible();
   await page
     .getByRole("navigation", { name: "모바일 메뉴" })
     .getByRole("link", { name: "히스토리" })
