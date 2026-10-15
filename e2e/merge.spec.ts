@@ -29,9 +29,10 @@ async function download(page: Page) {
 test("PC 백업을 휴대폰 기록과 병합하고 반복 가져오기 및 최신 수정본을 반영한다", async ({
   page,
   browser,
+  baseURL,
 }) => {
   const pcContext = await browser.newContext({
-    baseURL: "http://localhost:4173",
+    baseURL,
     viewport: { width: 1440, height: 900 },
   });
   try {

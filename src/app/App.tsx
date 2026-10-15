@@ -9,7 +9,6 @@ import {
   Library,
   Check,
   CloudOff,
-  Download,
 } from "lucide-react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { useData, workoutRepository } from "../hooks/useData";
@@ -23,10 +22,8 @@ const StatisticsPage = lazy(() =>
 );
 import { SettingsPage } from "../features/settings/SettingsPage";
 import { ExercisesPage } from "../features/exercise/ExercisesPage";
-interface InstallEvent extends Event {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: string }>;
-}
+import { useInstall } from "../hooks/useInstall";
+import { InstallPage } from "../features/install/InstallPage";
 const tabs = [
   { to: "/", label: "홈", icon: House },
   { to: "/history", label: "히스토리", icon: CalendarDays },
@@ -37,8 +34,8 @@ const tabs = [
 export function App() {
   const { pending, error, saved, invalid, run, clearError } = useData();
   const [ready, setReady] = useState(false),
-    [offline, setOffline] = useState(!navigator.onLine),
-    [install, setInstall] = useState<InstallEvent>();
+    [offline, setOffline] = useState(!navigator.onLine);
+  const { installed } = useInstall();
   const {
     needRefresh: [refresh, setRefresh],
     offlineReady: [cached, setCached],
@@ -54,20 +51,11 @@ export function App() {
         );
       });
     const online = () => setOffline(!navigator.onLine);
-    const prompt = (e: Event) => {
-      e.preventDefault();
-      setInstall(e as InstallEvent);
-    };
-    const installed = () => setInstall(undefined);
     window.addEventListener("online", online);
     window.addEventListener("offline", online);
-    window.addEventListener("beforeinstallprompt", prompt);
-    window.addEventListener("appinstalled", installed);
     return () => {
       window.removeEventListener("online", online);
       window.removeEventListener("offline", online);
-      window.removeEventListener("beforeinstallprompt", prompt);
-      window.removeEventListener("appinstalled", installed);
     }; // initialize once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -145,18 +133,10 @@ export function App() {
                 "기기에 저장"
               )}
             </span>
-            {install && (
-              <button
-                className="install-button"
-                onClick={async () => {
-                  await install.prompt();
-                  await install.userChoice;
-                  setInstall(undefined);
-                }}
-              >
-                <Download size={16} />
-                설치
-              </button>
+            {!installed && (
+              <Link className="install-button" to="/install">
+                홈 화면 추가
+              </Link>
             )}
           </div>
         </header>
@@ -205,6 +185,7 @@ export function App() {
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/exercises" element={<ExercisesPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/install" element={<InstallPage />} />
                 <Route
                   path="*"
                   element={

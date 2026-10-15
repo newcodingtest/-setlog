@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --include=dev --no-audit --no-fund
 COPY . .
+ARG VITE_SITE_URL=https://setlog.duckdns.org
+ENV VITE_SITE_URL=${VITE_SITE_URL}
 RUN npm run build
 
 FROM nginx:stable-alpine AS runtime

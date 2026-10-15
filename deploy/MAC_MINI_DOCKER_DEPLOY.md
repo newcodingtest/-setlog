@@ -44,7 +44,7 @@ docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile --adapter c
 docker compose exec caddy wget -qO- http://setlog-web:8080/healthz
 ```
 
-마지막 명령이 ok를 출력하면 Caddy에서 SetLog로 연결됩니다. https://setlog.duckdns.org로 접속하세요. 도메인의 DNS/DuckDNS 갱신과 80/443 연결은 공용 프록시 쪽에서 관리합니다. SetLog 프로젝트에는 도메인을 환경변수로 전달할 필요가 없습니다.
+마지막 명령이 ok를 출력하면 Caddy에서 SetLog로 연결됩니다. https://setlog.duckdns.org로 접속하세요. 도메인의 DNS/DuckDNS 갱신과 80/443 연결은 공용 프록시 쪽에서 관리합니다. SetLog 런타임에는 Caddy용 도메인 환경변수가 필요하지 않습니다. 공유 미리보기의 공개 주소를 바꾸는 경우 아래 VITE_SITE_URL 빌드 설정을 사용하세요.
 
 ## 재배포와 중지
 
@@ -68,3 +68,7 @@ SetLog 중지는 외부 네트워크나 별도 프로젝트의 공용 Caddy를 �
 ## 검증 범위
 
 Compose 기본 파일과 호환 파일의 설정 및 공유 네트워크·별칭·내부 포트를 검사합니다. Docker 엔진이 실행되지 않는 작업 환경이므로 실제 이미지 빌드, nginx -t, Mac mini에서의 컨테이너 통신과 인증서 발급은 직접 검증하지 못했습니다. 배포 서버에서 위 healthz 연결과 HTTPS 접속을 확인하세요.
+
+## 공유 썸네일 공개 주소
+
+카카오톡 미리보기의 절대 URL은 빌드 인수 VITE_SITE_URL(기본 https://setlog.duckdns.org)로 설정합니다. 다른 도메인을 쓰면 SetLog의 .env에 VITE_SITE_URL=https://실제도메인 을 넣고 다시 빌드하세요. 공용 Caddy 설정도 같은 도메인을 사용해야 합니다. /og/setlog-share-v1.png를 외부에서 로그인 없이 가져올 수 있어야 합니다. 배포 후 카카오 개발자 도구의 URL 메타정보/OG 캐시 도구로 확인하고 기존 미리보기 캐시를 초기화할 수 있습니다.

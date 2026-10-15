@@ -1546,10 +1546,9 @@ dialog::backdrop {
     padding: 17px 8px;
   }
   .set-row {
-    grid-template-columns: 22px minmax(36px, 0.8fr) minmax(44px, 1fr) minmax(
-        38px,
-        0.8fr
-      ) 44px 44px;
+    grid-template-columns:
+      22px minmax(36px, 0.8fr) minmax(44px, 1fr) minmax(38px, 0.8fr)
+      44px 44px;
     gap: 4px;
     padding: 6px 0;
   }
@@ -1589,4 +1588,398 @@ h3 {
   font-weight: 650;
 }
 
-dialog { margin: auto; }
+dialog {
+  margin: auto;
+}
+
+/* Home-screen onboarding */
+.install-promotion {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: linear-gradient(115deg, #273b1d, #1a2617);
+  border: 1px solid #638447;
+  border-radius: 14px;
+  margin: 0 0 24px;
+  box-shadow: inset 3px 0 #b3ed59;
+}
+.install-promotion-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: #b3ed59;
+  color: #1b2a12;
+  border-radius: 14px;
+  width: 56px;
+  height: 64px;
+}
+.install-promotion-copy {
+  flex: 1;
+  min-width: 0;
+}
+.install-promotion .eyebrow {
+  font-size: 10px;
+  color: #b3ed59;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.install-promotion h2 {
+  font-size: 21px;
+  margin: 0 0 8px;
+  color: #f3f8ed;
+  line-height: 1.4;
+}
+.install-promotion p {
+  font-size: 12px;
+  color: #bdcbb2;
+  margin-bottom: 11px;
+}
+.install-promotion > .primary {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.install-perks {
+  display: flex;
+  gap: 13px;
+  flex-wrap: wrap;
+}
+.install-perks span {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 10px;
+  color: #b4d59a;
+}
+.mobile-break {
+  display: none;
+}
+.install-benefits {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 30px;
+  margin-bottom: 22px;
+}
+.mini-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  padding: 20px 25px;
+  background: radial-gradient(#435d2e, transparent 70%);
+  flex-shrink: 0;
+}
+.mini-app img {
+  width: 82px;
+  height: 82px;
+  border-radius: 20px;
+  border: 1px solid #485f36;
+  box-shadow: 0 10px 30px #0007;
+}
+.mini-app span {
+  font-weight: 650;
+  font-size: 12px;
+}
+.install-benefits h2 {
+  font-size: 20px;
+}
+.install-benefits p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 11px;
+}
+.install-benefits p svg {
+  color: #b3ed59;
+  flex-shrink: 0;
+}
+.install-action {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.install-action p {
+  font-size: 12px;
+  margin: 0;
+}
+.install-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #27351e;
+  border: 1px solid #465d35;
+  border-radius: 10px;
+  padding: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.install-status svg {
+  flex-shrink: 0;
+}
+.in-app-notice {
+  background: #3b3320;
+  border: 1px solid #75643d;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 22px;
+}
+.in-app-notice strong {
+  font-size: 14px;
+  color: #f4db9f;
+}
+.in-app-notice p {
+  font-size: 12px;
+  color: #d1c3a2;
+  margin: 9px 0 0;
+}
+.install-device-picker {
+  display: flex;
+  gap: 8px;
+  margin: 26px 0 16px;
+}
+.install-device-picker button {
+  flex: 1;
+  border-radius: 9px;
+  background: #20291d;
+  border: 1px solid #35442c;
+  color: #a8bc99;
+  padding: 12px;
+  font-size: 13px;
+}
+.install-device-picker button[aria-pressed="true"] {
+  background: #b3ed59;
+  color: #17230d;
+  border-color: #b3ed59;
+  font-weight: 700;
+}
+.install-guide {
+  padding: 26px;
+}
+.install-guide h2 {
+  font-size: 18px;
+}
+.install-guide ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.install-guide li {
+  display: flex;
+  gap: 17px;
+  align-items: flex-start;
+  border-top: 1px solid #303c29;
+  padding: 23px 0;
+}
+.install-guide li:last-child {
+  padding-bottom: 0;
+}
+.install-step-number {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: #2e4023;
+  color: #b3ed59;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.install-guide li > div {
+  flex: 1;
+  min-width: 0;
+}
+.install-guide h3 {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 7px;
+}
+.install-guide p {
+  font-size: 12px;
+  margin: 0;
+}
+.install-guide li > svg {
+  color: #b3ed59;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.install-address {
+  padding: 25px;
+  margin: 22px 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.install-address > div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-basis: 100%;
+  color: #b3ed59;
+}
+.install-address h2 {
+  font-size: 15px;
+  margin: 0;
+}
+.install-address input {
+  flex: 1;
+  min-width: 180px;
+  font-size: 13px;
+}
+.install-address > p {
+  flex-basis: 100%;
+  font-size: 12px;
+  color: #b3ed59;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.install-footnote {
+  font-size: 12px;
+  line-height: 1.9;
+}
+.install-footnote a {
+  color: #b3ed59;
+  text-decoration: underline;
+}
+.install-button {
+  min-height: 44px;
+}
+@media (max-width: 1100px) {
+  .install-promotion {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .install-promotion > .primary {
+    margin-left: 71px;
+  }
+}
+@media (max-width: 760px) {
+  .install-promotion {
+    padding: 20px 17px;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .install-promotion-icon {
+    width: 42px;
+    height: 49px;
+    border-radius: 11px;
+  }
+  .install-promotion-icon svg {
+    width: 23px;
+  }
+  .install-promotion-copy {
+    flex-basis: calc(100% - 54px);
+  }
+  .install-promotion h2 {
+    font-size: 18px;
+    letter-spacing: -0.7px;
+  }
+  .install-promotion .eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
+  .install-promotion p {
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .install-perks {
+    gap: 9px;
+  }
+  .install-perks span {
+    font-size: 9px;
+  }
+  .install-promotion > .primary {
+    margin-left: 0;
+    width: 100%;
+    font-size: 14px;
+  }
+  .mobile-break {
+    display: initial;
+  }
+  .install-benefits {
+    padding: 22px 15px;
+    gap: 14px;
+  }
+  .mini-app {
+    padding: 12px 0;
+  }
+  .mini-app img {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+  .mini-app span {
+    font-size: 11px;
+  }
+  .install-benefits h2 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .install-benefits p {
+    font-size: 10px;
+    gap: 6px;
+    line-height: 1.7;
+  }
+  .install-device-picker {
+    gap: 6px;
+  }
+  .install-device-picker button {
+    font-size: 11px;
+    padding: 12px 6px;
+  }
+  .install-guide {
+    padding: 20px 17px;
+  }
+  .install-guide h2 {
+    font-size: 16px;
+  }
+  .install-guide li {
+    gap: 11px;
+    padding: 20px 0;
+  }
+  .install-guide h3 {
+    font-size: 13px;
+  }
+  .install-guide p {
+    font-size: 11px;
+  }
+  .install-step-number {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+  .install-guide li > svg {
+    width: 18px;
+  }
+  .install-address {
+    padding: 20px 17px;
+  }
+  .install-address input {
+    min-width: 0;
+    flex-basis: 100%;
+    font-size: 12px;
+  }
+  .install-address button {
+    width: 100%;
+  }
+  .install-address h2 {
+    font-size: 14px;
+  }
+  .install-action > .primary {
+    width: 100%;
+  }
+  .install-footnote {
+    font-size: 11px;
+  }
+  .header-actions .install-button {
+    font-size: 10px;
+    padding: 0 8px;
+  }
+}

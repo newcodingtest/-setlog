@@ -163,3 +163,17 @@ docker compose up -d --build
 공용 Caddy의 config/sites/setlog.caddy에는 reverse_proxy setlog-web:8080을 설정합니다. 도메인은 공용 Caddy에서 관리하므로 SetLog의 .env에는 도메인 설정이 필요하지 않습니다. 공유 네트워크 이름을 바꾸는 경우에만 PROXY_NETWORK를 설정하세요.
 
 배포, Caddy reload, 연결 확인은 [Mac mini 배포 가이드](deploy/MAC_MINI_DOCKER_DEPLOY.md)를 참고하세요.
+
+## 홈 화면 추가 안내와 카카오톡 미리보기
+
+홈 상단의 ‘홈 화면 추가’ 카드와 헤더 버튼에서 /install 안내 페이지로 이동합니다. iPhone/iPad, Android, PC/Mac의 수동 설치 방법과 카카오톡 인앱 브라우저에서 Safari/Chrome으로 여는 방법, 주소 복사를 제공합니다. 지원 브라우저는 beforeinstallprompt 이벤트가 도착하면 ‘지금 설치’ 버튼을 표시합니다. 홈 화면 앱 실행 또는 appinstalled 이벤트가 확인되면 설치 권유를 숨깁니다. 거절하거나 설치 창을 지원하지 않아도 수동 안내는 이용할 수 있습니다. 설치 이벤트·기기 분류는 자동 테스트하며 실제 OS 설치는 별도 확인이 필요합니다.
+
+카카오톡 URL 미리보기를 위해 index.html에 Open Graph 제목·설명·대표 이미지와 canonical을 넣었습니다. JavaScript 실행 전 HTML 응답에도 포함됩니다. 대표 이미지는 public/og/setlog-share-v1.png(1200×630)이며 SVG 원본도 보관합니다. npm run generate:share-image로 설치된 Chrome을 이용해 PNG를 다시 만들 수 있습니다.
+
+공개 주소 기본값은 https://setlog.duckdns.org입니다. 도메인을 바꿀 때 .env의 VITE_SITE_URL을 실제 HTTPS 주소로 변경하고 docker compose up -d --build로 다시 빌드하세요. 이 값은 공유 메타데이터의 절대 주소를 만드는 빌드 설정이며 공용 Caddy의 도메인/인증서 설정을 대신하지 않습니다. 루트 도메인만 지원하며 경로·쿼리·해시를 넣지 않습니다.
+
+배포 후 https://setlog.duckdns.org/og/setlog-share-v1.png에 이미지가 공개되어야 합니다. 이미 카카오톡에서 공유했던 주소는 기존 미리보기가 캐시될 수 있으므로 [카카오 개발자 도구](https://developers.kakao.com/tool)의 카카오톡 URL 메타정보/OG 캐시 도구에서 실제 배포 URL을 확인하고 캐시를 초기화하세요. 실제 카카오톡 서버의 수집과 표시 결과는 배포 후 확인해야 합니다. 카카오 SDK나 API 키는 필요하지 않습니다. [카카오 공식 설명](https://developers.kakao.com/docs/ko/tool/common)
+
+E2E는 최신 빌드 검증을 위해 전용 preview 서버를 실행합니다. 기본 4173 포트가 이미 사용 중이면 실행 중인 preview를 종료하거나 SETLOG_TEST_PORT로 다른 포트를 지정하세요.
+
+검증 서버를 직접 실행해 관리하는 환경에서는 SETLOG_TEST_EXTERNAL_SERVER=1을 함께 지정하면 해당 포트의 기존 서버를 재사용합니다. 이때 최신 빌드를 제공하는 서버인지 먼저 확인하세요.

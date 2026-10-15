@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { Download, Upload, ShieldCheck, Trash2 } from "lucide-react";
 import { useData, workoutRepository } from "../../hooks/useData";
@@ -126,6 +127,9 @@ export function SettingsPage() {
       </section>
       <section className="card settings-section">
         <h2>앱 설치 및 오프라인</h2>
+        <Link className="secondary" to="/install">
+          홈 화면 추가 방법 보기 →
+        </Link>
         <p>
           Android Chrome/Edge: 브라우저 메뉴의 ‘앱 설치’ 또는 ‘홈 화면에 추가’를
           선택하세요.

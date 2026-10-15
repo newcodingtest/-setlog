@@ -1,3 +1,4 @@
+import { InstallPromotion } from "../install/InstallPromotion";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowUpRight,
@@ -41,6 +42,7 @@ export function HomePage() {
           <CalendarDays />
         </span>
       </div>
+      <InstallPromotion />
       <section className="hero">
         <div className="hero-copy">
           <span className="eyebrow">EVERY SET COUNTS</span>
