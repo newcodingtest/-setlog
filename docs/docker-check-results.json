@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-14",
+  "composeDefault": "passed",
+  "composeHttps": "passed",
+  "typecheck": "passed",
+  "lint": "passed",
+  "unitTests": 35,
+  "build": "passed",
+  "e2e": {
+    "code": 0,
+    "out": "\nRunning 4 tests using 1 worker\n\n  ok 1 e2e\\backup.spec.ts:2:1 › 사용자 운동 생성·수정·삭제, 백업 확인과 복구, 기록 삭제 (3.4s)\n  ok 2 e2e\\backup.spec.ts:91:1 › 데스크톱과 작은 모바일의 레이아웃·기본 접근성 (1.1s)\n  ok 3 e2e\\merge.spec.ts:29:1 › PC 백업을 휴대폰 기록과 병합하고 반복 가져오기 및 최신 수정본을 반영한다 (4.0s)\n  ok 4 e2e\\workout.spec.ts:2:1 › 모바일 운동 기록, 재실행 복구, 이전 기록, 통계, 오프라인 PWA (2.4s)\n\n  4 passed (12.8s)\n",
+    "err": ""
+  },
+  "dockerRuntime": "not tested: daemon unavailable"
+}

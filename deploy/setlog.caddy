@@ -1,0 +1,6 @@
+# Add this file to the shared proxy's config/sites/ directory.
+# The shared config/Caddyfile must contain: import sites/*.caddy
+setlog.duckdns.org {
+    encode zstd gzip
+    reverse_proxy setlog-web:8080
+}

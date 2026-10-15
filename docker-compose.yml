@@ -1,0 +1,33 @@
+# Connect to the existing mac-mini-proxy Caddy.
+# Run: docker compose up -d --build
+name: setlog
+services:
+  setlog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: setlog:local
+    restart: unless-stopped
+    expose:
+      - "8080"
+    networks:
+      proxy:
+        aliases:
+          - setlog-web
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+networks:
+  proxy:
+    external: true
+    name: "${PROXY_NETWORK:-mac-mini-proxy}"

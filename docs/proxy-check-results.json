@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "compose": "default and compatibility configurations match; only setlog service; no host ports or volumes; shared network alias setlog-web",
+  "checks": [
+    {
+      "name": "typecheck",
+      "code": 0,
+      "out": "\n> setlog@1.0.0 typecheck\n> tsc --noEmit\n\n",
+      "err": ""
+    },
+    {
+      "name": "lint",
+      "code": 0,
+      "out": "\n> setlog@1.0.0 lint\n> eslint .\n\n",
+      "err": ""
+    },
+    {
+      "name": "test",
+      "code": 0,
+      "out": "\n> setlog@1.0.0 test\n> vitest run\n\n\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.4 \u001b[39m\u001b[90mD:/backup/vsCodeworkspace/side/setlog\u001b[39m\n\n \u001b[32m✓\u001b[39m tests/merge.test.ts \u001b[2m(\u001b[22m\u001b[2m13 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 200\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m✓\u001b[39m tests/repository.test.ts \u001b[2m(\u001b[22m\u001b[2m19 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 255\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m✓\u001b[39m tests/SetRow.test.tsx \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 379\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m3 passed\u001b[39m\u001b[22m\u001b[90m (3)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m35 passed\u001b[39m\u001b[22m\u001b[90m (35)\u001b[39m\n\u001b[2m   Start at \u001b[22m 11:23:57\n\u001b[2m   Duration \u001b[22m 26.02s\u001b[2m (environment 77%, setup 18%, import 3%, tests 1%, transform 1%)\u001b[22m\n\n",
+      "err": ""
+    },
+    {
+      "name": "build",
+      "code": 0,
+      "out": "\n> setlog@1.0.0 build\n> tsc --noEmit && vite build\n\n\u001b[36mvite v8.3.4 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 2527 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/manifest.webmanifest                          0.46 kB\ndist/index.html                                    0.74 kB │ gzip:   0.47 kB\ndist/assets/index-CYG6BpXi.css                    24.84 kB │ gzip:   6.76 kB\ndist/assets/workbox-window.prod.es5-Bd17z0YL.js    5.65 kB │ gzip:   2.20 kB\ndist/assets/StatisticsPage-dqKhXwgR.js           378.01 kB │ gzip: 108.51 kB\ndist/assets/index-CKAcBHoa.js                    415.17 kB │ gzip: 131.23 kB\n\n\u001b[32m✓ built in 8.35s\u001b[39m\n\nPWA v2.0.0\nmode      generateSW\nprecache  12 entries (814.15 KiB)\nfiles generated\n  dist/sw.js\n  dist/workbox-2fbc6a65.js\n",
+      "err": "\u001b[33m\u001b[33m[PLUGIN_TIMINGS] \u001b[0mJavaScript callbacks ran for 20.1s. The build took 8.3s. Callbacks such as `closeBundle` run after the build ends, so callback time can be more than build time.\nThe slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):\n  - plugin vite-plugin-pwa:build closeBundle (100%, 18.4s, 1 call)\n  - plugin @tailwindcss/vite:generate:build transform (13%, 1.1s, 1 call)\n  - plugin vite-plugin-pwa load (13%, 1.1s, 1 call)\nThese rows add up to more than the total. Callbacks can overlap, so the same time counts for more than one row.\nSee https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.\n\u001b[39m\n"
+    }
+  ],
+  "runtime": "Docker/Mac mini execution not tested"
+}
